@@ -3,6 +3,7 @@
     <h2>Register</h2>
     <div class="form-container">
       <form @submit.prevent="handleRegister">
+        <!-- Formulaire de création d'utilisateur -->
         <div class="form-group">
           <label for="firstName">First Name</label>
           <input type="text" class="form-control" id="firstName" v-model="firstName" placeholder="Enter first name" required />
@@ -51,12 +52,25 @@
 
       <p class="mt-3">Already have an account? <router-link to="/login">Login here</router-link></p>
     </div>
+
+    <!-- Affichage de la liste des utilisateurs récupérés -->
+    <div v-if="users.length > 0" class="users-list">
+      <h3>Users List</h3>
+      <div v-for="(user, index) in users" :key="index" class="user-card">
+        <p><strong>Name:</strong> {{ user.firstName }} {{ user.lastName }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Phone:</strong> {{ user.phone }}</p>
+        <p><strong>Address:</strong> {{ user.address }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
+// Déclaration des variables liées au formulaire
 const firstName = ref('');
 const lastName = ref('');
 const email = ref('');
@@ -66,12 +80,33 @@ const typeOfAccount = ref('customer');
 const password = ref('');
 const confirmPassword = ref('');
 
+// Liste des utilisateurs récupérés
+const users = ref([]);
+
+// Fonction pour récupérer les utilisateurs via l'API
+const fetchUsers = () => {
+  const url = 'http://localhost:8080/rest/v1/users'; // URL de l'API
+
+  axios.get(url)
+      .then(response => {
+        console.log(response.data); // Affichage des données dans la console
+        users.value = response.data; // Stockage des données dans users
+      })
+      .catch(error => {
+        console.error('Erreur lors de la récupération des utilisateurs :', error); // Affichage des erreurs dans la console
+      });
+};
+
+// Appel de la fonction lors du montage du composant
+onMounted(fetchUsers);
+
+// Fonction pour gérer la soumission du formulaire
 const handleRegister = () => {
   if (password.value !== confirmPassword.value) {
     alert("Passwords do not match!");
     return;
   }
-  // Handle form submission logic here (e.g., sending data to the backend)
+  // Logique de soumission du formulaire (envoi des données au backend)
   console.log('Form submitted with:', {
     firstName: firstName.value,
     lastName: lastName.value,
@@ -160,17 +195,15 @@ button:hover {
   text-decoration: underline;
 }
 
-/* Animation de fade-in */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+/* Liste des utilisateurs */
+.users-list {
+  margin-top: 30px;
 }
 
-.register-container {
-  animation: fadeIn 1s ease-in-out;
+.user-card {
+  background-color: #f4f4f4;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
 }
 </style>

@@ -55,7 +55,7 @@
   text-decoration: none;
   font-size: 18px;
   font-weight: bold;
-  text-transform: uppercase; /* Transforme le texte en majuscules */
+  text-transform: lowercase; /* mettre en minuscules */
   letter-spacing: 1px; /* Espace entre les lettres */
   padding: 8px 15px; /* Espacement autour du texte */
   border-radius: 4px;

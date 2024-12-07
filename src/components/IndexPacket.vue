@@ -1,6 +1,6 @@
 <template>
   <div class="index-container">
-    <h2>List of Packet</h2>
+    <h2>List of Packets</h2>
 
     <!-- Affichage de la liste des paquets -->
     <div v-if="packets.length > 0" class="packets-grid">
@@ -13,18 +13,35 @@
         <p><strong>Creation Date:</strong> {{ packet.creationDate }}</p>
       </div>
     </div>
+
+    <!-- Message si aucune donnée n'est disponible -->
+    <p v-else class="no-packets">No packets available.</p>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
-// Liste des paquets simulée (remplacer par une vraie source de données si nécessaire)
-const packets = ref([
-  { name: 'Colis 1', weight: 2.5, address: '123 Rue Exemple', postalCode: '75000', creationDate: '2024-11-01' },
-  { name: 'Colis 2', weight: 1.2, address: '456 Avenue Modèle', postalCode: '69000', creationDate: '2024-11-05' },
-  { name: 'Colis 3', weight: 3.0, address: '789 Boulevard Test', postalCode: '13000', creationDate: '2024-11-10' }
-]);
+// Liste réactive pour stocker les paquets
+const packets = ref([]);
+
+// Fonction pour récupérer les données des paquets avec axios
+const fetchPackets = () => {
+  const url = 'http://localhost:8080/rest/v1/packet'; // URL de l'API
+
+  axios.get(url)
+      .then(response => {
+        console.log(response.data); // Affiche les données dans la console
+        packets.value = response.data; // Assigne les données à packets
+      })
+      .catch(error => {
+        console.error('Erreur lors de la récupération des données :', error); // Affiche les erreurs dans la console
+      });
+};
+
+// Appel de la fonction lors du montage du composant
+onMounted(fetchPackets);
 </script>
 
 <style scoped>

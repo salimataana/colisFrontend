@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 // Variables pour lier les champs du formulaire
 const name = ref('');

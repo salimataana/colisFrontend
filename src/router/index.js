@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../components/Home.vue';
 import Register from '@/components/Register.vue';
 import Login from '@/components/Login.vue';
-import Packet from '@/components/Packet.vue';
-import PacketStatus from "@/components/PacketStatus.vue";
+import Packet from '@/components/createPacket.vue';
+import PacketStatus from "@/components/createPacketStatus.vue";
 import IndexPacket from "@/components/IndexPacket.vue";
 import PacketTracking from "@/components/PacketTracking.vue";
 
