@@ -5,9 +5,9 @@ SANOU Salimata Ana (myself): 100% of the project
 
 # Distribution of work
 
-**** Structure and implementation of the project: 30 minutes
+****Structure and implementation of the project: 30 minutes
 
-**** review of vue.js : 
+****review of vue.js : 
 
 ****Development of Vue.js components: 3 hours
 

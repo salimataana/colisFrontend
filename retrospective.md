@@ -17,8 +17,18 @@ JavaScript: For functional logic.
 
 # What worked well
 
-Managing vue js components
-Management of different routes
+Managing vue.js components.
+Management of different routes.
+footer works well.
+navbar works well.
+Frontend login works well.
+Frontend register works well.
+Frontend List of Packet works well.
+Frontend PacketTracking works well.
+Frontend Home works well.
+Frontend Create PacketStatus works well.
+Frontend Packet works well.
+
 
 # Difficulties encountered
 
@@ -27,7 +37,7 @@ Handling asynchronous API errors required additional adjustments.
 # What I learned
 
 Using components with vue.js
-API integration with axios for communication between backend and frontend
+API integration with axios for communication between backend and frontend.
 
 # Possible improvements
 
