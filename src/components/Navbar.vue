@@ -19,9 +19,6 @@
       <li class="nav-item">
         <router-link to="/indexpacket" class="nav-link">List of Packet</router-link>
       </li>
-      <li class="nav-item">
-        <router-link to="/trackingpacket" class="nav-link">Detail of Tracking</router-link>
-      </li>
     </ul>
   </nav>
 </template>

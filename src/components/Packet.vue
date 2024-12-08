@@ -41,23 +41,48 @@
   </div>
 </template>
 
-<script setup>
-import {ref} from 'vue';
+<script>
+import axios from "axios";
 
-// Variables pour lier les champs du formulaire
-const name = ref('');
-const weight = ref(null);
-const address_packet = ref('');
-const code_postal = ref(null);
-const date_creation = ref('');
+export default {
+  name: 'Packets',
+  data() {
+    return {
+      name: "",
+      weight: 0,
+      address_packet: "",
+      code_postal: "",
+      date_creation: "",
+      submitted: false,
+    };
+  },
 
-// Variable pour afficher les informations soumises
-const submitted = ref(false);
+  methods: {
+    async submitForm() {
+      try {
+        const packetData = {
+          name: this.name,
+          weight: this.weight,
+          address_packet: this.address_packet,
+          code_postal: this.code_postal,
+          date_creation: this.date_creation,
+        };
+        //alert(JSON.stringify(packetData));
+        const response = await axios.post('http://localhost:8080/rest/v1/packet',packetData);
+        console.log(response.status); // Affiche le code de statut
+        this.submitted = true;
+        // Redirection vers la route IndexPacket avec la bonne casse
+        this.$router.push('/indexpacket');
+      } catch (error) {
+        console.error('Erreur lors de la création du packet :', error.response || error);
+        alert('Une erreur est survenue lors de la création du packet.');
+      }
+    },
+  },
 
-// Fonction pour soumettre le formulaire
-const submitForm = () => {
-  // Lorsque le formulaire est soumis, afficher les informations saisies
-  submitted.value = true;
+  created() {
+    axios.get('http://localhost:8080/rest/v1/packet');
+  },
 };
 </script>
 

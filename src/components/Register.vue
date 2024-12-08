@@ -2,7 +2,7 @@
   <div class="register-container">
     <h2>Register</h2>
     <div class="form-container">
-      <form @submit.prevent="handleRegister">
+      <form @submit.prevent="submitForm">
         <!-- Formulaire de création d'utilisateur -->
         <div class="form-group">
           <label for="firstName">First Name</label>
@@ -53,70 +53,64 @@
       <p class="mt-3">Already have an account? <router-link to="/login">Login here</router-link></p>
     </div>
 
-    <!-- Affichage de la liste des utilisateurs récupérés -->
-    <div v-if="users.length > 0" class="users-list">
-      <h3>Users List</h3>
-      <div v-for="(user, index) in users" :key="index" class="user-card">
-        <p><strong>Name:</strong> {{ user.firstName }} {{ user.lastName }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Phone:</strong> {{ user.phone }}</p>
-        <p><strong>Address:</strong> {{ user.address }}</p>
-      </div>
-    </div>
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
+<script>
 
-// Déclaration des variables liées au formulaire
-const firstName = ref('');
-const lastName = ref('');
-const email = ref('');
-const phone = ref('');
-const address = ref('');
-const typeOfAccount = ref('customer');
-const password = ref('');
-const confirmPassword = ref('');
+import axios from "axios";
 
-// Liste des utilisateurs récupérés
-const users = ref([]);
+export default {
+  name: "Register",
+  data() {
+    return {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      address: "",
+      typeOfAccount: "",
+      password: "",
+      confirmPassword: "",
+    }
+  },
 
-// Fonction pour récupérer les utilisateurs via l'API
-const fetchUsers = () => {
-  const url = 'http://localhost:8080/rest/v1/users'; // URL de l'API
+  created() {
+  },
 
-  axios.get(url)
-      .then(response => {
-        console.log(response.data); // Affichage des données dans la console
-        users.value = response.data; // Stockage des données dans users
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des utilisateurs :', error); // Affichage des erreurs dans la console
-      });
-};
-
-// Appel de la fonction lors du montage du composant
-onMounted(fetchUsers);
-
-// Fonction pour gérer la soumission du formulaire
-const handleRegister = () => {
-  if (password.value !== confirmPassword.value) {
-    alert("Passwords do not match!");
-    return;
+  methods: {
+    async submitForm() {
+      try {
+        const usersData = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          phone: this.phone,
+          address: this.address,
+          typeOfAccount: this.typeOfAccount,
+          password: this.password,
+          confirmPassword: this.confirmPassword,
+        };
+        alert(JSON.stringify(usersData));
+        //const response = await axios.post('http://localhost:8080/rest/v1/packet',packetData);
+        //console.log(response.status); // Affiche le code de statut
+        //this.submitted = true;
+        // Redirection vers la route IndexPacket avec la bonne casse
+        this.$router.push('/indexpacket');
+      } catch (error) {
+        console.error('Erreur lors de la création du packet :', error.response || error);
+        alert('Une erreur est survenue lors de la création du packet.');
+      }
+    },
   }
-  // Logique de soumission du formulaire (envoi des données au backend)
-  console.log('Form submitted with:', {
-    firstName: firstName.value,
-    lastName: lastName.value,
-    email: email.value,
-    phone: phone.value,
-    address: address.value,
-    typeOfAccount: typeOfAccount.value,
-    password: password.value,
-  });
-};
+
+
+
+
+}
+
+
+
 </script>
 
 <style scoped>

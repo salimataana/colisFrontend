@@ -1,32 +1,65 @@
 <template>
-  <div class="tracking-container">
-    <div class="tracking-card">
+  <div v-if="packetstatus.length > 0" class="tracking-container">
+    <div v-for="packetstatu in packetstatus" :key="packetstatu.id" class="tracking-card">
+
       <h2 class="tracking-title">Tracking of Packet</h2>
       <div class="tracking-details">
         <div class="detail">
           <label class="detail-label">Numéro de Suivi :</label>
-          <span class="detail-value">{{ trackingNumber }}</span>
+          <span class="detail-value">{{ packetstatu.id }}</span>
         </div>
         <div class="detail">
           <label class="detail-label">Statut :</label>
-          <span class="detail-value" :class="statusClass">{{ status }}</span>
+          <span class="detail-value" >{{ packetstatu.name }}</span>
         </div>
         <div class="detail">
           <label class="detail-label">Description :</label>
-          <span class="detail-value">{{ description }}</span>
+          <span class="detail-value">{{ packetstatu.description }}</span>
         </div>
         <div class="detail">
           <label class="detail-label">Date :</label>
-          <span class="detail-value">{{ date }}</span>
+          <span class="detail-value">{{ packetstatu.created_at }}</span>
         </div>
       </div>
     </div>
   </div>
+  <div v-else>
+    <p>No Tracking Status available.</p>
+  </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue';
+<script>
+ import { ref, computed } from 'vue';
+ import axios from "axios";
+ //http://localhost:8080/rest/v1/trackingpacket/452
 
+
+
+ export default {
+   name: 'PacketTracking',
+   data(){
+     return {
+       packetId:this.$route.params.packetId,
+       packetstatus: null
+     }
+   },
+   created(){
+     this.fetchPacket()
+   },
+   methods:{
+    async fetchPacket(){
+       const response = await axios.get(`http://localhost:8080/rest/v1/trackingpacket/${this.packetId}`,{
+         headers: {
+           'Access-Control-Allow-Origin': '*'
+         }
+       })
+       console.log(response);
+       this.packetstatus = response.data;
+   }
+   }
+ }
+
+/*
 // Variables du colis
 const trackingNumber = ref('1234567890');
 const status = ref('Reprogrammé'); // Nouveau statut ajouté
@@ -40,6 +73,8 @@ const statusClass = computed(() => {
   if (status.value === 'Reprogrammé') return 'status-rescheduled'; // Nouvelle classe pour "Reprogrammé"
   return 'status-pending';
 });
+ */
+
 </script>
 
 <style scoped>

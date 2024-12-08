@@ -1,19 +1,22 @@
-<script setup>
-import { defineComponent } from 'vue';
-import Navbar from './components/Navbar.vue';
+<script>
+import Navbar from "@/components/Navbar.vue";
+import Packet from "@/components/Packet.vue";
 
-
+export default {
+  name: 'App',
+  components: {
+    Navbar,
+    Packet
+  }
+};
 </script>
 
 <template>
   <main>
-  <div>
-    <!-- Navbar affichée en haut de chaque page -->
-    <Navbar />
-    <!--<Footer/> -->
-
-    <router-view></router-view> <!-- Affiche les composants correspondant à la route -->
-  </div>
+    <div>
+      <Navbar/>
+      <router-view/>
+    </div>
   </main>
 </template>
 
