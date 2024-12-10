@@ -1,6 +1,12 @@
 # Frontendcolis
 
 This template should help get you started developing with Vue 3 in Vite.
+## Description
+
+This project is a frontend application developed with Vue.js,
+intended to manage and track parcel deliveries in real time.
+It allows users to interact with a parcel management system 
+via a user-friendly and efficient interface.
 
 ## Recommended IDE Setup
 
