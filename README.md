@@ -9,6 +9,14 @@ WebStorm offers excellent support for Vue.js,
 including features like code completion, 
 real-time error detection, and built-in Git integration.
 
+
+## Authors
+
+Contributors names and contact info
+
+ex. SANOU Salimata Ana
+ex. [@githubaccount](https://github.com/salimataana)
+
 ---
 
 ## Customize configuration
