@@ -4,10 +4,10 @@
       <li class="nav-item">
         <router-link to="/" class="nav-link">Home</router-link>
       </li>
-      <li class="nav-item">
+      <li v-if="!isAuthenticated" class="nav-item">
         <router-link to="/register" class="nav-link">Register</router-link>
       </li>
-      <li class="nav-item">
+      <li v-if="!isAuthenticated" class="nav-item">
         <router-link to="/login" class="nav-link">Login</router-link>
       </li>
       <li class="nav-item">
@@ -19,11 +19,28 @@
       <li class="nav-item">
         <router-link to="/indexpacket" class="nav-link">List of Packet</router-link>
       </li>
+      <li v-if="isAuthenticated" class="nav-item">
+        <router-link to="/login" class="nav-link" @click.native="clickHandler">Logout</router-link>
+      </li>
     </ul>
   </nav>
 </template>
 
-<script setup>
+<script>
+import AuthService from "@/services/AuthService.js";
+
+export default {
+  data(){
+    return {
+      isAuthenticated: AuthService.isAuthenticated(),
+    }
+  },
+  methods:{
+    clickHandler(){
+      AuthService.logout();
+    }
+  }
+}
 </script>
 
 <style scoped>

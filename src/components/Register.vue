@@ -50,6 +50,10 @@
         <button type="submit" class="btn btn-primary w-100">Submit</button>
       </form>
 
+      <div v-if="message">
+        <p>{{ message }}</p>
+      </div>
+
       <p class="mt-3">Already have an account? <router-link to="/login">Login here</router-link></p>
     </div>
 
@@ -72,6 +76,7 @@ export default {
       typeOfAccount: "",
       password: "",
       confirmPassword: "",
+      message: "",
     }
   },
 
@@ -87,19 +92,30 @@ export default {
           email: this.email,
           phone: this.phone,
           address: this.address,
-          typeOfAccount: this.typeOfAccount,
+          role: this.typeOfAccount,
           password: this.password,
           confirmPassword: this.confirmPassword,
         };
-        alert(JSON.stringify(usersData));
-        //const response = await axios.post('http://localhost:8080/rest/v1/packet',packetData);
+        //alert(JSON.stringify(usersData));
+        const response = await axios.post('http://localhost:8080/rest/v1/register',usersData, {
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          }
+        });
+        if (response.status === 200) {
+          this.message = "L'Utilisateur a été bien crée";
+        }
+        if (response.status !== 200) {
+          this.message = response;
+        }
         //console.log(response.status); // Affiche le code de statut
         //this.submitted = true;
         // Redirection vers la route IndexPacket avec la bonne casse
-        this.$router.push('/indexpacket');
+       // this.$router.push('/indexpacket');
       } catch (error) {
-        console.error('Erreur lors de la création du packet :', error.response || error);
-        alert('Une erreur est survenue lors de la création du packet.');
+        console.error('Erreur lors de la création du User :', error.response || error);
+        //alert('Une erreur est survenue lors de la création du User.');
+        this.message = error.response["data"][0]["defaultMessage"];
       }
     },
   }

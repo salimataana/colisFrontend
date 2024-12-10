@@ -24,15 +24,15 @@ navbar works well.
 Frontend login works well.
 Frontend register works well.
 Frontend List of Packet works well.
-Frontend PacketTracking works well.
+Frontend Index PacketTracking works well.
 Frontend Home works well.
 Frontend Create PacketStatus works well.
-Frontend Packet works well.
-
+Frontend Create Packet works well.
+Frontend Index Packet works well.
 
 # Difficulties encountered
 
-Handling asynchronous API errors required additional adjustments.
+Handling API errors .
 
 # What I learned
 

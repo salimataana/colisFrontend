@@ -1,10 +1,10 @@
 <template>
   <div class="login-form">
     <h2>Login</h2>
-    <form @submit.prevent="handleLogin">
+    <form @submit.prevent="submitForm">
       <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="email" placeholder="Enter your email" required />
+        <label for="username">Email</label>
+        <input type="email" id="username" v-model="username" placeholder="Enter your email" required />
       </div>
       <div class="form-group">
         <label for="password">Password</label>
@@ -13,28 +13,54 @@
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
 
+    <div v-if="message">
+      <p>{{ message }}</p>
+    </div>
+
     <p class="mt-3">Don't have an account? <router-link to="/register">Register here</router-link></p>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script>
+import AuthService  from "@/services/AuthService.js";
+import axios from "axios";
 
-// Définir les variables email et password
-const email = ref('');
-const password = ref('');
+export default {
+  name: 'Login',
+  data() {
+    return {
+      email: '',
+      password: '',
+      message: '',
+      isAuthenticated: AuthService.isAuthenticated(),
+    }
+  },
+  methods: {
+    async submitForm() {
 
-// Gérer la soumission du formulaire
-const handleLogin = () => {
-  // Logique pour vérifier les informations de connexion
-  if (!email.value || !password.value) {
-    alert("Please fill in all fields!");
-  } else {
-    console.log('Email:', email.value);
-    console.log('Password:', password.value);
-    // Ajoutez la logique pour envoyer les informations à un backend ou faire une validation supplémentaire
+      const loginData = {
+        username: this.username,
+        password: this.password,
+      };
+      try {
+        const response = await AuthService.login(loginData);
+
+
+        //const response = await axios.post('http://localhost:8080/rest/v1/login', loginData, {
+        //  headers: {
+           // 'Access-Control-Allow-Origin': '*'
+         // }
+       // });
+
+        this.isAuthenticated = true;
+        this.message = "connexion reussie";
+        this.$router.push('/indexpacket');
+      } catch (error) {
+        this.message = "erreur de connexion";
+      }
+    }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -32,7 +32,7 @@
       <button type="submit">Create PacketStatus</button>
       <button @click.prevent="submitForm()">Get values</button>
     </form>
-    <p><strong>Nom :</strong> {{ name }}</p>
+
     <!-- Affichage des données soumises -->
     <div v-if="submitted" class="form-summary">
       <h3>Données soumises :</h3>
