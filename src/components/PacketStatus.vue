@@ -30,7 +30,8 @@
       </div>
 
       <button type="submit">Create PacketStatus</button>
-      <button @click.prevent="submitForm()">Get values</button>
+      <!-- <button @click.prevent="submitForm()">Get values</button> -->
+
     </form>
 
     <!-- Affichage des données soumises -->
